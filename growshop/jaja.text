@@ -1,0 +1,4 @@
+
+-- subir imagen desde la pagina y en los settings hacer cambios
+
+pip install pillow

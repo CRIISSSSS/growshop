@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="papeleria.css">
+    <title>Cactus Shop</title>
+    <style>
+        .carrito a {
+            font-size: 2rem; 
+        }
+
+        .carrito a i.bi-cart-check {
+            color: #198754;
+            font-size: 3rem; 
+        }   
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+
+    <div class="container">
+        <h1>Papeleria Shop</h1>
+        <div class="carrito">
+            <a href="carrito.html"><i id="carrito-icon" class="bi bi-cart"></i></a>
+        </div>
+        <div class="product">
+            <img src="imagenes/papelillos fumanchu.webp" alt="Cactus">
+            <div class="product-details">
+                <h2>Papelillos Fumanchu</h2>
+                <p>Descripcion: Papelillos Fumanchu diferentes colores</p>
+                <p>Precio: $30.000</p>
+                <button onclick="addToCart('Cactus Plant', 10)">Add to Cart</button>
+            </div>
+        </div>
+        
+        <div class="product">
+            <img src="imagenes/papelillos ocb.jpg" alt="Cactus">
+            <div class="product-details">
+                <h2>Papelillos OCB</h2>
+                <p>Descripcion:Papelillos OCB</p>
+                <p>Precio: $30.000</p>
+                <button onclick="addToCart('Succulent Plant', 8)">Add to Cart</button>
+            </div>
+        </div>
+        
+        <div class="product">
+            <img src="imagenes/papelillos raw.jpg" alt="Cactus">
+            <div class="product-details">
+                <h2>Papelillos RAW</h2>
+                <p>Descripcion: Papelillos RAW</p>
+                <p>Precio: $30.000</p>
+                <button onclick="addToCart('Cactus Plant', 10)">Add to Cart</button>
+            </div>
+        </div>
+
+
+        <div class="product">
+            <img src="imagenes/papelillo pink.webp" alt="Cactus">
+            <div class="product-details">
+                <h2>Papelillos Pink</h2>
+                <p>Descripcion: Papelillos Pink</p>
+                <p>Precio: $30.000</p>
+                <button onclick="addToCart('Cactus Plant', 10)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="product">
+            <img src="imagenes/papelillo bulldog.png" alt="Cactus">
+            <div class="product-details">
+                <h2>Papelillos Bulldog</h2>
+                <p>Descripcion: Papelillos Bulldog</p>
+                <p>Precio: $30.000</p>
+                <button onclick="addToCart('Cactus Plant', 10)">Add to Cart</button>
+            </div>
+        </div>
+
+
+        <!-- Add more products here -->
+    </div>
+
+    <script>
+        function addToCart(productName, price) {
+            alert("Product added to cart: " + productName + " - Price: $" + price);
+            var carritoIcon = document.getElementById('carrito-icon');
+            carritoIcon.classList.remove('bi-cart');
+            carritoIcon.classList.add('bi-cart-check');
+        }
+    </script>
+</body>
+</html>
+
+</body>
+</html>

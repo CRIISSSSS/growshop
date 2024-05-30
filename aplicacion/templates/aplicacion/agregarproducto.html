@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto - Cactus Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            color: #212529;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary,
+        .btn-danger,
+        .btn-success {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a href="indexAdmin.html"><img src="./imagenes/cactus.png" alt="Logo" width="120" class="d-inline-block text-align-left"></a>
+            <h1 class="text-center mx-auto">Agregar Producto - Cactus Home</h1>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <hr><hr><hr><hr>
+        <a class="link-success" href="adminPanel.html"><i class="bi bi-chevron-double-left"> atrás</i></a>
+        <div class="container border border-5">
+            <h2 class="text-center mb-4">Agregar Producto</h2>
+            <form id="agregarProductoForm" onsubmit="return validarFormulario()">
+                <div class="mb-3">
+                    <label for="nombreProducto" class="form-label">Nombre del Producto</label>
+                    <input type="text" class="form-control" id="nombreProducto" placeholder="Ingrese el nombre del producto" required>
+                </div>
+                <div class="mb-3">
+                    <label for="precioProducto" class="form-label">Precio del Producto</label>
+                    <input type="number" class="form-control" id="precioProducto" placeholder="Ingrese el precio del producto" required>
+                </div>
+                <div class="mb-3">
+                    <label for="stockProducto" class="form-label">Cantidad en Stock</label>
+                    <input type="number" class="form-control" id="stockProducto" placeholder="Ingrese la cantidad en stock" required>
+                </div>
+                <div class="mb-3">
+                    <label for="imagenProducto" class="form-label">Imagen</label>
+                    <input type="file" class="form-control" id="imagenProducto" accept="image/*" required>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success">Agregar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5">
+        <p>&copy; 2024 Growshop Online. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function validarFormulario() {
+            var nombreProducto = document.getElementById('nombreProducto').value;
+            var precioProducto = document.getElementById('precioProducto').value;
+            var stockProducto = document.getElementById('stockProducto').value;
+            var imagenProducto = document.getElementById('imagenProducto').value;
+
+            if (nombreProducto === '' || precioProducto === '' || stockProducto === '' || imagenProducto === '') {
+                alert('Por favor complete todos los campos');
+                return false;
+            }
+
+            alert('Producto agregado');
+            return true;
+        }
+    </script>
+</body>
+
+</html>
