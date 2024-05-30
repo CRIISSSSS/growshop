@@ -2,3 +2,19 @@
 -- subir imagen desde la pagina y en los settings hacer cambios
 
 pip install pillow
+
+
+setting
+STATIC_URL = 'static/'
+import os
+MEDIA_URL='/media/'
+MEDIA_ROOT=
+
+
+moises sepulveda
+pagina django tutorial va por partes
+
+
+DDD
+
+makemigrations va primero y luego migrations/sirve para models. ponerle null a los models para que no de problemas
