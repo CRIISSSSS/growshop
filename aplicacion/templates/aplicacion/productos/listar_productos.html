@@ -1,15 +1,41 @@
-{% extends "base.html" %}
+{% extends '../base.html' %}
 
 {% block contenido %}
-<h1>Productos</h1>
-<ul>
-    {% for producto in productos %}
-    <li>
-        <h2>{{ producto.nombre }}</h2>
-        <p>{{ producto.descripcion }}</p>
-        <p>Precio: ${{ producto.precio }}</p>
-        <a href="{% url 'agregar_al_carrito' producto.id %}">Agregar al Carrito</a>
-    </li>
-    {% endfor %}
-</ul>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Productos</h2>
+
+
+
+    {% if mensaje %}
+    <div class="alert alert-success text-center" role="alert">
+        {{ mensaje }}
+    </div>
+    {% endif %}
+
+
+    <div class="row">
+        {% for producto in productos %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% else %}
+                <img src="https://via.placeholder.com/350x200?text=No+Image" class="card-img-top" alt="Imagen no disponible">
+                {% endif %}
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    <p class="card-text"><strong>Precio:</strong> ${{ producto.precio }}</p>
+                    <p class="card-text"><strong>Stock:</strong> {{ producto.stock }}</p>
+                    <p class="card-text"><strong>Categoría:</strong> {{ producto.categoria.nombre }}</p>
+                    <form action="{% url 'agregar_al_carrito' producto.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Añadir al Carrito</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends '../base.html' %}
+
+{% block contenido %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2>Tu Carrito</h2>
+            {% if carrito and items %}
+                <ul>
+                    {% for item in items %}
+                        <li>{{ item.producto.nombre }} - {{ item.cantidad }} x {{ item.producto.precio }} = {{ item.subtotal }}</li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'realizar_pedido' %}" class="btn btn-primary">Realizar Pedido</a>
+            {% else %}
+                <p>Tu carrito está vacío</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

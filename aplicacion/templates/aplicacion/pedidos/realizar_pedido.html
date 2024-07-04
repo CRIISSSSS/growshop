@@ -1,0 +1,42 @@
+{% extends '../base.html' %}
+
+{% block contenido %}
+<div class="container">
+    <h2 class="my-4">Realizar Pedido</h2>
+    <form method="post" action="{% url 'realizar_pedido' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección de Envío</label>
+            <input type="text" class="form-control" id="direccion" name="direccion" required>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.producto.nombre }}</td>
+                        <td>{{ item.producto.descripcion }}</td>
+                        <td>${{ item.producto.precio }}</td>
+                        <td>
+                            <input type="number" name="cantidad_{{ item.producto.id }}" value="{{ item.cantidad }}" min="1" max="{{ item.producto.stock }}" class="form-control">
+                            {% if item.cantidad > item.producto.stock %}
+                                <div class="text-danger">No hay suficiente stock para esta cantidad.</div>
+                            {% endif %}
+                        </td>
+                        <td>${{ item.subtotal }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Confirmar Pedido</button>
+    </form>
+</div>
+{% endblock %}

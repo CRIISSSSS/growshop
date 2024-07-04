@@ -1,6 +1,10 @@
 from django.contrib import admin
-from .models import Producto, Carrito, CarritoItem, Pedido, PedidoItem, Seguimiento
+from .models import Producto, Carrito, CarritoItem, Pedido, PedidoItem, Seguimiento, Categoria
 # Register your models here.
+
+@admin.register(Categoria)
+class CategoriaAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'descripcion')
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):

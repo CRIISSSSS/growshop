@@ -1,0 +1,17 @@
+{% extends '../base.html' %}
+
+{% block contenido %}
+<h2>Seguimiento de Pedido</h2>
+<p>Pedido #{{ pedido.id }}</p>
+<p>Total: {{ pedido.total }}</p>
+<p>Dirección: {{ pedido.direccion }}</p>
+<p>Estado: {{ pedido.estado }}</p>
+<p>Fechita: {{pedido.actualizado}}</p>
+
+<h3>Historial de Seguimiento</h3>
+<ul>
+    {% for seguimiento in seguimientos %}
+        <li>{{ seguimiento.creado }} - {{ seguimiento.estado }} - {{ seguimiento.descripcion }} -  </li>
+    {% endfor %}
+</ul>
+{% endblock %}
