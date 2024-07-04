@@ -7,6 +7,7 @@ from django.utils import timezone
 class Categoria(models.Model):
     nombre = models.CharField(max_length=150)
     descripcion = models.TextField(blank=True)
+    imagen = models.ImageField(upload_to='categoria', null=True, blank=True)
 
     def __str__(self):
         return self.nombre
@@ -14,7 +15,7 @@ class Categoria(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=150)
     descripcion = models.TextField()
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precio = models.IntegerField(max_length=10)
     stock = models.IntegerField(default=0)
     imagen = models.ImageField(upload_to='productos', null=True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
@@ -48,7 +49,7 @@ class CarritoItem(models.Model):
 
 class Pedido(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    total = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.IntegerField(max_length=10)
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)
     direccion = models.TextField()
@@ -62,7 +63,7 @@ class PedidoItem(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField(default=1)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precio = models.IntegerField(max_length=10)
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)
 

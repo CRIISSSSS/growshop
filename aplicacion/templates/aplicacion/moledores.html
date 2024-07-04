@@ -1,0 +1,72 @@
+{% extends './base.html' %}
+
+{% block title %}Moledores - VioG{% endblock %}
+
+{% block contenido %}
+<h1 class="mb-4">Moledores <i id="carrito-icon" class="fas fa-shopping-cart text-muted"></i></h1>
+<div class="row">
+    {% for producto in productos %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+            {% else %}
+                <img src="https://via.placeholder.com/350x200?text=No+Image" class="card-img-top" alt="Imagen no disponible">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ producto.nombre }}</h5>
+                <p class="card-text">{{ producto.descripcion }}</p>
+                <p class="card-text"><strong>Precio: </strong>${{ producto.precio }}</p>
+                <p class="card-text"><strong>Stock: </strong>{{ producto.stock }}</p>
+                <form action="{% url 'agregar_al_carrito' producto.id %}" method="post" class="agregar-carrito-form">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="modal fade" id="agregarCarritoModal" tabindex="-1" aria-labelledby="agregarCarritoModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <div class="modal-body">
+        Producto agregado al carrito
+    </div>
+    </div>
+</div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var myModal = new bootstrap.Modal(document.getElementById('agregarCarritoModal'), {
+            keyboard: false
+        });
+
+        var agregarCarritoForms = document.querySelectorAll('.agregar-carrito-form');
+        agregarCarritoForms.forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+
+                myModal.show();
+
+                var carritoIcon = document.getElementById('carrito-icon');
+                carritoIcon.classList.remove('text-muted');
+                carritoIcon.classList.add('text-success');
+
+                setTimeout(function() {
+                    myModal.hide();
+                    carritoIcon.classList.remove('text-success');
+                    carritoIcon.classList.add('text-muted');
+                }, 2000);
+
+                setTimeout(function() {
+                    form.submit();
+                }, 500); 
+            });
+        });
+    });
+</script>
+
+{% endblock %}

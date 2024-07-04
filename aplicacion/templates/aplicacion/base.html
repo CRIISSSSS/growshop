@@ -8,7 +8,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'listar_productos' %}">Mi Tienda</a>
+        <a class="navbar-brand" href="{% url 'listar_productos' %}">Cactus Home</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -18,12 +18,20 @@
                     <a class="nav-link" href="{% url 'ver_carrito' %}">Carrito</a>
                 </li>
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'realizar_pedido' %}">Realizar Pedido</a>
+                  {% if user.is_staff %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'admin_inicio' %}">AdminPanel</a>
+                    </li>
+                    {% endif %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mis_pedidos' %}">Ver mis pedidos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
-                </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'realizar_pedido' %}">Realizar Pedido</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+                  </li>
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'registro' %}">Registro</a>
@@ -39,7 +47,7 @@
         {% block contenido %}{% endblock %}
     </div>
     <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p>&copy; 2024 Alonso la hizo</p>
+        <p>&copy; 2024 Todos los derechos robados</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

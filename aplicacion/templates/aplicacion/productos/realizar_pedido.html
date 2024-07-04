@@ -1,10 +1,30 @@
-{% extends "../base.html" %}
+{% extends '../base.html' %}
+
+{% block title %}Realizar Pedido{% endblock %}
 
 {% block contenido %}
 <h1>Realizar Pedido</h1>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Realizar Pedido</button>
+    <div class="form-group">
+        <label for="direccion">Dirección de envío</label>
+        <input type="text" class="form-control" id="direccion" name="direccion" required>
+    </div>
+    <h3>Productos en el Carrito</h3>
+    {% for item in items %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ item.producto.nombre }}</h5>
+            <p class="card-text">{{ item.producto.descripcion }}</p>
+            <p class="card-text"><strong>Precio: </strong>${{ item.producto.precio }}</p>
+            <p class="card-text"><strong>Stock: </strong>{{ item.producto.stock }}</p>
+            <div class="form-group">
+                <label for="cantidad_{{ item.producto.id }}">Cantidad</label>
+                <input type="number" class="form-control" id="cantidad_{{ item.producto.id }}" name="cantidad_{{ item.producto.id }}" value="{{ item.cantidad }}" min="1" max="{{ item.producto.stock }}">
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Realizar Pedido</button>
 </form>
 {% endblock %}

@@ -1,0 +1,40 @@
+{% extends '../base.html' %}
+
+{% block title %}Panel de Administración{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-secondary text-white text-center">
+                    <h2>Panel de Administración</h2>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="{% url 'admin_listar_usuarios' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span>Gestionar Usuarios</span>
+                            <span class="badge badge-success badge-pill">Usuarios</span>
+                        </a>
+                        <a href="{% url 'admin_listar_seguimientos' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span>Gestionar Seguimientos</span>
+                            <span class="badge badge-success badge-pill">Seguimientos</span>
+                        </a>
+                        <a href="{% url 'admin_listar_pedidos' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span>Gestionar Pedidos</span>
+                            <span class="badge badge-success badge-pill">Pedidos</span>
+                        </a>
+                        <a href="{% url 'admin_listar_productos' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <span>Gestionar Productos</span>
+                            <span class="badge badge-success badge-pill">Productos</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'listar_productos' %}" class="btn btn-secondary">Volver a la tienda</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

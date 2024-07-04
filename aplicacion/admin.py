@@ -5,6 +5,7 @@ from .models import Producto, Carrito, CarritoItem, Pedido, PedidoItem, Seguimie
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'descripcion')
+    search_fields = ('nombre', 'descripcion')
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):

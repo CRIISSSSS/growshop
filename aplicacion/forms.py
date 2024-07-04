@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ['nombre', 'descripcion', 'precio', 'stock', 'imagen']
+        fields = ['nombre', 'descripcion', 'precio', 'stock', 'imagen', 'categoria']
 
 class PedidoForm(forms.ModelForm):
     class Meta:
@@ -29,3 +29,13 @@ class RegistroForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+
+class SeguimientoForm(forms.ModelForm):
+    class Meta:
+        model = Seguimiento
+        fields = ['estado', 'descripcion']
+        widgets = {
+            'estado': forms.Select(choices=Seguimiento.estado),
+            'descripcion': forms.Textarea(attrs={'rows': 3}),
+        }
+

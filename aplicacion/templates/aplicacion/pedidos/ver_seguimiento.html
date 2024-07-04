@@ -1,17 +1,20 @@
 {% extends '../base.html' %}
 
+{% block title %}Seguimiento del Pedido{% endblock %}
+
 {% block contenido %}
-<h2>Seguimiento de Pedido</h2>
-<p>Pedido #{{ pedido.id }}</p>
-<p>Total: {{ pedido.total }}</p>
-<p>Dirección: {{ pedido.direccion }}</p>
-<p>Estado: {{ pedido.estado }}</p>
-<p>Fechita: {{pedido.actualizado}}</p>
+<h1>Seguimiento del Pedido #{{ pedido.id }}</h1>
+<p><strong>Dirección:</strong> {{ pedido.direccion }}</p>
+<p><strong>Total:</strong> ${{ pedido.total }}</p>
+<p><strong>Estado actual:</strong> {{ pedido.estado }}</p>
 
 <h3>Historial de Seguimiento</h3>
-<ul>
+<div class="timeline">
     {% for seguimiento in seguimientos %}
-        <li>{{ seguimiento.creado }} - {{ seguimiento.estado }} - {{ seguimiento.descripcion }} -  </li>
+    <div class="timeline-item">
+        <p><strong>{{ seguimiento.creado }}</strong> - {{ seguimiento.estado }}</p>
+        <p>{{ seguimiento.descripcion }}</p>
+    </div>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

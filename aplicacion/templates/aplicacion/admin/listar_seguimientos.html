@@ -1,0 +1,36 @@
+{% extends '../base.html' %}
+
+{% block title %}Administrar Seguimientos{% endblock %}
+
+{% block contenido %}
+<h1>Administrar Seguimientos</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Pedido</th>
+            <th>Estado</th>
+            <th>Descripción</th>
+            <th>Creado</th>
+            <th>Actualizado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for seguimiento in seguimientos %}
+        <tr>
+            <td>{{ seguimiento.id }}</td>
+            <td>{{ seguimiento.pedido.id }}</td>
+            <td>{{ seguimiento.estado }}</td>
+            <td>{{ seguimiento.descripcion }}</td>
+            <td>{{ seguimiento.creado }}</td>
+            <td>{{ seguimiento.actualizado }}</td>
+            <td>
+                <a href="{% url 'admin_editar_seguimiento' seguimiento.id %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'admin_eliminar_seguimiento' seguimiento.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

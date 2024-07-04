@@ -1,0 +1,54 @@
+{% extends '../base.html' %}
+
+{% block title %}Detalles del Pedido #{{ pedido.id }}{% endblock %}
+
+{% block contenido %}
+<h1>Detalles del Pedido #{{ pedido.id }}</h1>
+<p><strong>Usuario:</strong> {{ pedido.usuario.username }}</p>
+<p><strong>Total:</strong> ${{ pedido.total }}</p>
+<p><strong>Dirección:</strong> {{ pedido.direccion }}</p>
+<p><strong>Estado:</strong> {{ pedido.estado }}</p>
+<p><strong>Creado:</strong> {{ pedido.creado }}</p>
+<p><strong>Actualizado:</strong> {{ pedido.actualizado }}</p>
+
+<h3>Seguimientos</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Estado</th>
+            <th>Descripción</th>
+            <th>Creado</th>
+            <th>Actualizado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for seguimiento in seguimientos %}
+        <tr>
+            <td>{{ seguimiento.estado }}</td>
+            <td>{{ seguimiento.descripcion }}</td>
+            <td>{{ seguimiento.creado }}</td>
+            <td>{{ seguimiento.actualizado }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Añadir Actualización</h3>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="estado">Estado</label>
+        <select class="form-control" id="estado" name="estado">
+            <option value="pendiente">Pendiente</option>
+            <option value="en proceso">En Proceso</option>
+            <option value="enviado">Enviado</option>
+            <option value="entregado">Entregado</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Añadir Actualización</button>
+</form>
+{% endblock %}

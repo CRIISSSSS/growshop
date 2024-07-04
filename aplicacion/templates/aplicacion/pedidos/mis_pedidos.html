@@ -1,0 +1,45 @@
+
+{% extends '../base.html' %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Mis Pedidos</h2>
+
+    {% if pedidos %}
+    {% for pedido in pedidos %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title">Pedido #{{ pedido.id }}</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Fecha de Pedido:</strong> {{ pedido.creado }}</p>
+            <p><strong>Total:</strong> ${{ pedido.total }}</p>
+            <p><strong>Dirección de Envío:</strong> {{ pedido.direccion }}</p>
+            <h6 class="card-subtitle mb-2 text-muted">Productos:</h6>
+            <div class="row">
+                {% for item in pedido.pedidoitem_set.all %}
+                <div class="col-md-3 mb-3">
+                    <div class="card">
+                        {% if item.producto.imagen %}
+                        <img src="{{ item.producto.imagen.url }}" alt="{{ item.producto.nombre }}" class="card-img-top img-fluid">
+                        {% else %}
+                        <img src="https://via.placeholder.com/150" alt="No Image" class="card-img-top img-fluid">
+                        {% endif %}
+                        <div class="card-body">
+                            <h6 class="card-title">{{ item.producto.nombre }}</h6>
+                            <p class="card-text">Cantidad: {{ item.cantidad }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        No tienes pedidos realizados.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

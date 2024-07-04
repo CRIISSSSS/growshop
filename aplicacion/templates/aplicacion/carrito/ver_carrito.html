@@ -1,20 +1,64 @@
 {% extends '../base.html' %}
 
+{% block title %}Tu Carrito{% endblock %}
+
 {% block contenido %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h2>Tu Carrito</h2>
-            {% if carrito and items %}
-                <ul>
-                    {% for item in items %}
-                        <li>{{ item.producto.nombre }} - {{ item.cantidad }} x {{ item.producto.precio }} = {{ item.subtotal }}</li>
-                    {% endfor %}
-                </ul>
-                <a href="{% url 'realizar_pedido' %}" class="btn btn-primary">Realizar Pedido</a>
-            {% else %}
-                <p>Tu carrito está vacío</p>
-            {% endif %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-secondary text-white text-center">
+                    <h2>Tu Carrito</h2>
+                </div>
+                <div class="card-body">
+                    {% if carrito and items %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Subtotal</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in items %}
+                                <tr>
+                                    <td>{{ item.producto.nombre }}</td>
+                                    <td>
+                                        <form method="post" action="{% url 'actualizar_carrito' item.id %}">
+                                            {% csrf_token %}
+                                            <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" class="form-control form-control-sm">
+                                            <button type="submit" class="btn btn-sm btn-secondary mt-1">Actualizar</button>
+                                        </form>
+                                    </td>
+                                    <td>${{ item.producto.precio }}</td>
+                                    <td>${{ item.subtotal }}</td>
+                                    <td>
+                                        <form method="post" action="{% url 'eliminar_del_carrito' item.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="text-right">
+                            <h4>Total: ${{ total }}</h4>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="{% url 'realizar_pedido' %}" class="btn btn-success btn-lg">Realizar Pedido</a>
+                        </div>
+                    {% else %}
+                        <p class="text-center">Tu carrito está vacío</p>
+                    {% endif %}
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'listar_productos' %}" class="btn btn-secondary">Continuar Comprando</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
