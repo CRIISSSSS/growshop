@@ -47,6 +47,10 @@ def realizar_pedido(request):
 
     carrito = get_object_or_404(Carrito, id=carrito_id)
     items = CarritoItem.objects.filter(carrito=carrito)
+    usuario = request.user
+
+    if usuario.baneado:
+        return render(request, 'aplicacion/usuarios/baneado.html')
 
     if request.method == 'POST':
         direccion = request.POST.get('direccion')
@@ -87,11 +91,11 @@ def realizar_pedido(request):
         )
         carrito.delete()
 
-        
+        print(usuario.baneado)
         del request.session['carrito_id']
         return redirect('ver_seguimiento', pedido_id=pedido.id)
 
-    return render(request, 'aplicacion/pedidos/realizar_pedido.html', {'items': items})
+    return render(request, 'aplicacion/pedidos/realizar_pedido.html', {'items': items, 'usuario': usuario})
 
 
 def ver_carrito(request):
@@ -224,10 +228,15 @@ def admin_editar_usuario(request, user_id):
 @user_passes_test(is_admin)
 def admin_eliminar_usuario(request, user_id):
     usuario = get_object_or_404(User, id=user_id)
+    tiene_pedidos = Pedido.objects.filter(usuario=usuario).exists()
     if request.method == 'POST':
-        usuario.delete()
+        if tiene_pedidos:
+            usuario.baneado = True
+            usuario.save()
+        else:
+            usuario.delete()
         return redirect('admin_listar_usuarios')
-    return render(request, 'aplicacion/admin/eliminar_usuario.html', {'usuario': usuario})
+    return render(request, 'aplicacion/admin/eliminar_usuario.html', {'usuario': usuario, 'tiene_pedidos': tiene_pedidos})
 
 @user_passes_test(is_admin)
 def admin_listar_seguimientos(request):
@@ -263,18 +272,29 @@ def admin_listar_pedidos(request):
 def admin_ver_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id)
     seguimientos = Seguimiento.objects.filter(pedido=pedido)
+    items = pedido.pedidoitem_set.all()
+
+    for item in items:
+        item.total = item.cantidad * item.precio
 
     if request.method == 'POST':
         estado = request.POST.get('estado')
         descripcion = request.POST.get('descripcion')
+
         Seguimiento.objects.create(
             pedido=pedido,
             estado=estado,
             descripcion=descripcion
         )
+        pedido.estado = estado  
+        pedido.save(update_fields=['estado', 'actualizado'])  
         return redirect('admin_ver_pedido', pedido_id=pedido.id)
 
-    return render(request, 'aplicacion/admin/ver_pedido.html', {'pedido': pedido, 'seguimientos': seguimientos})
+    return render(request, 'aplicacion/admin/ver_pedido.html', {
+        'pedido': pedido,
+        'seguimientos': seguimientos,
+        'items': items,
+    })
 
 @user_passes_test(is_admin)
 def admin_inicio(request):
@@ -319,7 +339,19 @@ def admin_editar_producto(request, producto_id):
 @user_passes_test(is_admin)
 def admin_eliminar_producto(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
+    tiene_pedidos = PedidoItem.objects.filter(producto=producto).exists()
     if request.method == 'POST':
-        producto.delete()
+        if tiene_pedidos:
+            producto.oculto = True
+            producto.save()
+        else:
+            producto.delete()
         return redirect('admin_listar_productos')
-    return render(request, 'aplicacion/admin/eliminar_producto.html', {'producto': producto})
+    return render(request, 'aplicacion/admin/eliminar_producto.html', {'producto': producto, 'tiene_pedidos': tiene_pedidos})
+
+
+def admin_ver_usuario(request, user_id):
+    usuario = get_object_or_404(User, id=user_id)
+    pedidos = Pedido.objects.filter(usuario=usuario).prefetch_related('pedidoitem_set__producto')
+
+    return render(request, 'aplicacion/admin/usuario_adminpanel.html', {'usuario': usuario, 'pedidos': pedidos})

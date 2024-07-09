@@ -19,8 +19,7 @@ class Producto(models.Model):
     stock = models.IntegerField(default=0)
     imagen = models.ImageField(upload_to='productos', null=True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
-
-    
+    oculto = models.BooleanField(default=False)
 
     def __str__(self):
         return self.nombre
@@ -59,6 +58,12 @@ class Pedido(models.Model):
         ('enviado', 'Enviado'),
         ('entregado', 'Entregado')})
     
+    def save(self, *args, **kwargs):
+        if not self.pk:  
+            self.creado = models.DateTimeField(auto_now_add=True)
+        self.actualizado = models.DateTimeField(auto_now=True)
+        super(Pedido, self).save(*args, **kwargs)
+    
 class PedidoItem(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
@@ -83,3 +88,5 @@ class Seguimiento(models.Model):
     
     def __str__(self):
         return f'Seguimiento de Pedido {self.pedido.id}'
+
+User.add_to_class('baneado', models.BooleanField(default=False))

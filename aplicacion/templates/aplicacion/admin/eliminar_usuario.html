@@ -3,11 +3,20 @@
 {% block title %}Eliminar Usuario{% endblock %}
 
 {% block contenido %}
-<h1>Eliminar Usuario</h1>
-<p>¿Estás seguro que deseas eliminar al usuario {{ usuario.username }}?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Eliminar</button>
-    <a href="{% url 'admin_listar_usuarios' %}" class="btn btn-secondary">Cancelar</a>
-</form>
+<div class="container mt-4">
+    <h1>Eliminar Usuario</h1>
+    <p>¿Estás seguro de que deseas eliminar al usuario "{{ usuario.username }}"?</p>
+    {% if usuario.baneado %}
+        <p>Este usuario ya está baneado.</p>
+    {% else %}
+        {% if tiene_pedidos %}
+            <p>El usuario tiene pedidos asociados y no se puede eliminar. Se marcará como baneado.</p>
+        {% endif %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a href="{% url 'admin_listar_usuarios' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
 {% endblock %}

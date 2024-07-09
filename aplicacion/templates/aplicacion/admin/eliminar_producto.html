@@ -3,11 +3,20 @@
 {% block title %}Eliminar Producto{% endblock %}
 
 {% block contenido %}
-<h1>Eliminar Producto</h1>
-<p>¿Estás seguro que deseas eliminar el producto {{ producto.nombre }}?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger"aaaaaaaaaaaaaa>Eliminar</button>
-    <a href="{% url 'admin_listar_productos' %}" class="btn btn-secondary">Cancelar</a>
-</form>
+<div class="container mt-4">
+    <h1>Eliminar Producto</h1>
+    <p>¿Estás seguro de que deseas eliminar el producto "{{ producto.nombre }}"?</p>
+    {% if producto.oculto %}
+        <p>Este producto ya está oculto.</p>
+    {% else %}
+        {% if tiene_pedidos %}
+            <p>El producto tiene pedidos asociados y no se puede eliminar. Se marcará como oculto.</p>
+        {% endif %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a href="{% url 'admin_listar_productos' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
 {% endblock %}

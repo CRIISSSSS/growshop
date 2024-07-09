@@ -39,6 +39,8 @@ urlpatterns = [
     path('adm/productos/agregar/', views.admin_agregar_producto, name='admin_agregar_producto'),
     path('adm/productos/editar/<int:producto_id>/', views.admin_editar_producto, name='admin_editar_producto'),
     path('adm/productos/eliminar/<int:producto_id>/', views.admin_eliminar_producto, name='admin_eliminar_producto'),
+    path('adm/usuarios/ver/<int:user_id>/', views.admin_ver_usuario, name='admin_ver_usuario'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

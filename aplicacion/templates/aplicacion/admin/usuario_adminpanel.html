@@ -1,0 +1,53 @@
+{% extends '../base.html' %}
+
+{% block title %}Ver Usuarios{% endblock %}
+
+{% block contenido %}
+<div class="container mt-4">
+    <h1>Perfil del Usuario</h1>
+    <div class="card mb-4">
+        <div class="card-header">
+            Detalles del Usuario
+        </div>
+        <div class="card-body">
+            <p><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
+            <p><strong>Email:</strong> {{ usuario.email }}</p>
+            <p><strong>Nombre Completo:</strong> {{ usuario.get_full_name }}</p>
+            <p><strong>Fecha de Registro:</strong> {{ usuario.date_joined }}</p>
+            {% if usuario.baneado %}
+                <p><strong>Estado:</strong> Esta baneado</p>
+            {% else %}
+                <p><strong>Estado:</strong> Usuario habilitado</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <h3>Pedidos Realizados</h3>
+    {% for pedido in pedidos %}
+    <div class="card mb-3">
+        <div class="card-header">
+            Pedido #{{ pedido.id }}
+        </div>
+        <div class="card-body">
+            <p><strong>Total:</strong> ${{ pedido.total }}</p>
+            <p><strong>Dirección:</strong> {{ pedido.direccion }}</p>
+            <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+            <p><strong>Creado:</strong> {{ pedido.creado }}</p>
+            <p><strong>Actualizado:</strong> {{ pedido.actualizado }}</p>
+            <h5>Productos Comprados</h5>
+            <ul class="list-group">
+                {% for item in pedido.pedidoitem_set.all %}
+                <li class="list-group-item">
+                    {{ item.cantidad }} de {{ item.producto.nombre }} a ${{ item.precio }} cada uno
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% empty %}
+    <p>No hay pedidos realizados por este usuario.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
+

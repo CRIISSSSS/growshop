@@ -25,6 +25,11 @@
         </div>
     </div>
     {% endfor %}
+    {% if usuario.baneado %}
+        <p>Estás baneado, chao pescao</p>
+    {% elif not usuario.baneado  %}
     <button type="submit" class="btn btn-primary">Realizar Pedido</button>
+    {% endif %}
+        
 </form>
 {% endblock %}

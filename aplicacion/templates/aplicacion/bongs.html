@@ -6,25 +6,27 @@
 <h1 class="mb-4">Bongs <i id="carrito-icon" class="fas fa-shopping-cart text-muted"></i></h1>
 <div class="row">
     {% for producto in productos %}
-    <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            {% if producto.imagen %}
-                <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
-            {% else %}
-                <img src="https://via.placeholder.com/350x200?text=No+Image" class="card-img-top" alt="Imagen no disponible">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ producto.nombre }}</h5>
-                <p class="card-text">{{ producto.descripcion }}</p>
-                <p class="card-text"><strong>Precio: </strong>${{ producto.precio }}</p>
-                <p class="card-text"><strong>Stock: </strong>{{ producto.stock }}</p>
-                <form action="{% url 'agregar_al_carrito' producto.id %}" method="post" class="agregar-carrito-form">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
-                </form>
+        {% if not producto.oculto %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+                {% else %}
+                    <img src="https://via.placeholder.com/350x200?text=No+Image" class="card-img-top" alt="Imagen no disponible">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">{{ producto.descripcion }}</p>
+                    <p class="card-text"><strong>Precio: </strong>${{ producto.precio }}</p>
+                    <p class="card-text"><strong>Stock: </strong>{{ producto.stock }}</p>
+                    <form action="{% url 'agregar_al_carrito' producto.id %}" method="post" class="agregar-carrito-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+        {% endif %}
     {% endfor %}
 </div>
 

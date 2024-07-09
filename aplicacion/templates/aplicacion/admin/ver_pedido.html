@@ -11,6 +11,32 @@
 <p><strong>Creado:</strong> {{ pedido.creado }}</p>
 <p><strong>Actualizado:</strong> {{ pedido.actualizado }}</p>
 
+<h3>Detalles del Pedido</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.producto.nombre }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>${{ item.precio }}</td>
+            <td>${{ item.total }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3"><strong>Total del Pedido:</strong></td>
+            <td><strong>${{ pedido.total }}</strong></td>
+        </tr>
+    </tbody>
+</table>
+
 <h3>Seguimientos</h3>
 <table class="table table-striped">
     <thead>

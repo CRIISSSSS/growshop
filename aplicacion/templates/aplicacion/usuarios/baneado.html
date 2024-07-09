@@ -1,0 +1,10 @@
+
+{% extends '../base.html' %}
+
+{% block title %}Usuario Baneado{% endblock %}
+
+{% block contenido %}
+<h1>Tu cuenta está baneada</h1>
+<p>Lo sentimos, estás baneado y no puedes realizar pedidos.</p>
+<a href="{% url 'listar_productos' %}" class="btn btn-primary">Volver a la Página Principal</a>
+{% endblock %}

@@ -33,7 +33,7 @@
         {% for producto in productos %}
         <tr>
             <td>{{ producto.id }}</td>
-            <td>{{ producto.nombre }}</td>
+            <td {% if producto.oculto %}style="color: red; font-weight: bold;"{% endif %}>{{ producto.nombre }}</td>
             <td>{{ producto.descripcion }}</td>
             <td>${{ producto.precio }}</td>
             <td>{{ producto.stock }}</td>
